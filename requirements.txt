@@ -1,0 +1,9 @@
+numpy>=1.26
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.8
+jupyter
+# optional: nicer test output (the tests also run without it: python tests/test_core.py)
+pytest
+# optional: only needed to read the DSLIB Excel files
+openpyxl

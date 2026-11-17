@@ -1,0 +1,17 @@
+# Datasets are downloaded by scripts/download_data.py, not committed
+# (the SiP licence forbids redistributing modified copies, and DSLIB is large).
+data/raw/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
