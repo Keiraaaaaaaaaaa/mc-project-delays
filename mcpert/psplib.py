@@ -30,7 +30,64 @@ def read_psplib(path):
     `mpm_time` is the critical-path length given in the file, a free check of the
     parser: project.planned_duration() must equal it.
     """
-    raise NotImplementedError("Part 4 (Brian): read_psplib")
+    path = Path(path)
+    section = None
+    project_info = {}
+    successors = {}
+    durations = {}
+
+    with path.open("r", encoding="utf-8") as f:
+        for raw in f:
+            line = raw.strip()
+            if not line:
+                continue
+            if line.startswith("PROJECT INFORMATION"):
+                section = "project"
+                continue
+            if line.startswith("PRECEDENCE RELATIONS"):
+                section = "precedence"
+                continue
+            if line.startswith("REQUESTS/DURATIONS"):
+                section = "durations"
+                continue
+            if line.startswith("RESOURCEAVAILABILITIES"):
+                section = None
+                continue
+
+            parts = line.split()
+            if not parts or not parts[0].isdigit():
+                continue
+
+            values = [int(x) for x in parts]
+            if section == "project":
+                if len(values) < 6:
+                    continue
+                project_info = {
+                    "due_date": values[3],
+                    "mpm_time": values[5],
+                }
+            elif section == "precedence":
+                if len(values) < 3:
+                    continue
+                job = values[0] - 1
+                successor_count = values[2]
+                successors[job] = [x - 1 for x in values[3:3 + successor_count]]
+            elif section == "durations":
+                if len(values) < 3:
+                    continue
+                job = values[0] - 1
+                durations[job] = values[2]
+
+    k = max(max(successors, default=-1), max(durations, default=-1)) + 1
+    duration_array = [durations[i] for i in range(k)]
+    successor_array = [successors.get(i, []) for i in range(k)]
+    project = Project.from_successors(duration_array, successor_array)
+    info = {
+        "due_date": project_info["due_date"],
+        "mpm_time": project_info["mpm_time"],
+        "name": path.stem,
+    }
+    return project, info
 
 
 def psplib_files(family="j30"):

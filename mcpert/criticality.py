@@ -20,7 +20,8 @@ def criticality_index(project, model, n, rng=None):
     project.critical_tasks (a boolean array of shape (n, k)), and average over the
     scenarios. Returns an array of shape (k,).
     """
-    raise NotImplementedError("Part 4 (Brian): criticality_index")
+    D = model.sample(n, rng)
+    return project.critical_tasks(D).mean(axis=0)
 
 
 def shift_sensitivity(project, model, task, h, n, rng=None):
@@ -31,4 +32,8 @@ def shift_sensitivity(project, model, task, h, n, rng=None):
     Using the SAME durations in both runs makes them strongly correlated, so the
     difference has a tiny variance. That is the "common random numbers" trick.
     """
-    raise NotImplementedError("Part 4 (Brian): shift_sensitivity")
+    D = model.sample(n, rng)
+    shifted = D.copy()
+    shifted[:, task] += h
+    differences = (project.completion_time(shifted) - project.completion_time(D)) / h
+    return mean_ci(differences)
