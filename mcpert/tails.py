@@ -1,7 +1,6 @@
 """Heavy tails and rare events. Part 5, Robin.
 
-TODO (Robin): implement the three pieces below. Run
-`python tests/test_part5.py` until every test passes.
+Checked by `python tests/test_part5.py`.
 """
 
 from __future__ import annotations
@@ -31,13 +30,20 @@ class ParetoRatio(DurationModel):
         self.k = len(self.planned)
 
     def ppf(self, U):
-        raise NotImplementedError("Part 5 (Robin): ParetoRatio.ppf")
+        # Inverse of F(r) = 1 - (scale / r)^alpha.
+        return self.planned * self.scale * (1 - U) ** (-1 / self.alpha)
 
     def mean(self):
-        raise NotImplementedError("Part 5 (Robin): ParetoRatio.mean")
+        a = self.alpha
+        if a <= 1:
+            return np.full(self.k, np.inf)
+        return self.planned * self.scale * a / (a - 1)
 
     def var(self):
-        raise NotImplementedError("Part 5 (Robin): ParetoRatio.var")
+        a = self.alpha
+        if a <= 2:
+            return np.full(self.k, np.inf)
+        return self.planned**2 * self.scale**2 * a / ((a - 1) ** 2 * (a - 2))
 
 
 def hill_tail_index(x, k):
@@ -46,7 +52,8 @@ def hill_tail_index(x, k):
     With X_(1) >= X_(2) >= ... sorted in decreasing order,
         1 / alpha_hat = (1/k) sum_{i=1..k} log( X_(i) / X_(k+1) ).
     """
-    raise NotImplementedError("Part 5 (Robin): hill_tail_index")
+    X = np.sort(np.asarray(x, dtype=float))[::-1]
+    return 1 / np.mean(np.log(X[:k] / X[k]))
 
 
 def tail_probability_is(project, planned, ratios, t, theta, n, rng=None, tilt="one"):
@@ -68,4 +75,32 @@ def tail_probability_is(project, planned, ratios, t, theta, n, rng=None, tilt="o
     Hints: rng.choice(m, size=..., p=q) draws indices from q; compute the weights
     in logs (np.log, then np.exp) to avoid overflow.
     """
-    raise NotImplementedError("Part 5 (Robin): tail_probability_is")
+    rng = np.random.default_rng(rng)
+    planned = np.asarray(planned, dtype=float)
+    ratios = np.asarray(ratios, dtype=float)
+    m, k = len(ratios), project.k
+
+    # 1. Tilted law q_j proportional to r_j^theta, in logs (log-sum-exp).
+    a = theta * np.log(ratios)
+    log_q = a - (a.max() + np.log(np.exp(a - a.max()).sum()))
+    q = np.exp(log_q)
+    q /= q.sum()  # rng.choice wants probabilities that sum to 1 exactly
+
+    # 2. Draw the ratio indices J (n, k) and the log-weights log(f / g).
+    if tilt == "all":
+        J = rng.choice(m, size=(n, k), p=q)
+        log_w = -(np.log(m) + log_q[J]).sum(axis=1)
+    elif tilt == "one":
+        J = rng.integers(m, size=(n, k))
+        I = rng.integers(k, size=n)
+        J[np.arange(n), I] = rng.choice(m, size=n, p=q)
+        b = np.log(m) + log_q[J]  # log(m q_{J_i})
+        b_max = b.max(axis=1, keepdims=True)
+        log_mean = b_max[:, 0] + np.log(np.exp(b - b_max).mean(axis=1))
+        log_w = -log_mean
+    else:
+        raise ValueError("tilt must be 'all' or 'one'")
+
+    # 3. Weighted indicators 1{T > t} * w.
+    T = project.completion_time(planned * ratios[J])
+    return mean_ci((T > t) * np.exp(log_w))
