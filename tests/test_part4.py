@@ -1,4 +1,4 @@
-"""Checks for Part 4 (Brian). Run with `python tests/test_part4.py` until all pass.
+"""Checks for Part 4. Run with `python tests/test_part4.py` until all pass.
 
 They test mcpert/psplib.py and mcpert/criticality.py.
 """

@@ -1,4 +1,4 @@
-"""Checks for Parts 1-3 (Keira). Run with `pytest` or `python tests/test_core.py`.
+"""Checks for Parts 1-3. Run with `pytest` or `python tests/test_core.py`.
 
 Monte Carlo checks use a fixed seed and a tolerance of several standard errors,
 so they are deterministic and are not flaky.

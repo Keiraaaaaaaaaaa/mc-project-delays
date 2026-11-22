@@ -1,4 +1,4 @@
-"""Heavy tails and rare events. Part 5, Robin.
+"""Heavy tails and rare events. Part 5.
 
 Checked by `python tests/test_part5.py`.
 """

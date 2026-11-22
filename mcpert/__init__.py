@@ -1,8 +1,8 @@
 """mcpert: Monte Carlo for project delivery dates (3ML project).
 
-Parts 1-3 (Keira): network, duration models, Monte Carlo estimators, Clark, SiP data.
-Part 4 (Brian):    PSPLIB reader, criticality index.
-Part 5 (Robin):    heavy tails (Pareto model, Hill estimator), importance sampling.
+Parts 1-3: network, duration models, Monte Carlo estimators, Clark, SiP data.
+Part 4:    PSPLIB reader, criticality index.
+Part 5:    heavy tails (Pareto model, Hill estimator), importance sampling.
 """
 
 # Parts 1-3

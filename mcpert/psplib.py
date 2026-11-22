@@ -1,8 +1,4 @@
-"""Reading PSPLIB project networks (Kolisch & Sprecher, 1997). Part 4, Brian.
-
-TODO (Brian): implement read_psplib. Run
-`python tests/test_part4.py` until every test passes.
-"""
+"""Reading PSPLIB project networks (Kolisch & Sprecher, 1997). Part 4."""
 
 from __future__ import annotations
 

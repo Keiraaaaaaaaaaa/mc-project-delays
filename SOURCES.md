@@ -27,7 +27,7 @@
 | | Sullivan, Hayya & Schaul (1982). Efficiency of the antithetic variate method for simulating stochastic networks. *Mgmt. Sci.* 28(5), 563-572; and Grant (1983), *Mgmt. Sci.* 29(3), 381-384 | Antithetic variables on project networks. Reported gain: the same precision for about 1/4 of the computation | 2, 4 |
 | | Dodin & Elmaghraby (1985). Approximating the criticality indices of the activities in PERT networks. *Mgmt. Sci.* 31(2), 207-223 | Criticality indices, checked against Monte Carlo | 4 |
 | | Elmaghraby, S. E. (2000). On criticality and sensitivity in activity networks. *EJOR* 127(2), 220-238 | Criticality index vs sensitivity ∂E[T]/∂μᵢ | 2, 4 |
-| | Baccelli, Cohen, Olsder & Quadrat (1992). *Synchronization and Linearity: An Algebra for Discrete Event Systems.* Wiley | Max-plus algebra for networks with synchronisation: the forward pass F = A ⊗ F ⊕ D is a max-plus linear system | 2 (remark) |
+| | Baccelli, Cohen, Olsder & Quadrat (1992). *Synchronization and Linearity: An Algebra for Discrete Event Systems.* Wiley | Max-plus algebra for networks with synchronisation: the reference for the tropical view of project durations | 2 (remark) |
 | | Maclagan & Sturmfels (2015). *Introduction to Tropical Geometry.* Graduate Studies in Mathematics 161, AMS | Tropical polynomials are maxima of linear functions, hence convex: the convexity behind Jensen's inequality for T | 2 (remark) |
 
 ## Why real projects are late (Part 1, Part 5)

@@ -1,9 +1,7 @@
-"""Which tasks drive the delivery date? Part 4, Brian.
+"""Which tasks drive the delivery date? Part 4.
 
 Criticality index of task i: P(i is on the critical path) (Van Slyke, 1963).
-Theorem (to prove in Part 4): if D_i = mu_i + noise_i, then dE[T]/dmu_i = P(i is critical).
-
-TODO (Brian): implement the two functions, then run `python tests/test_part4.py`.
+Theorem (Part 4): if D_i = mu_i + noise_i, then dE[T]/dmu_i = P(i is critical).
 """
 
 from __future__ import annotations

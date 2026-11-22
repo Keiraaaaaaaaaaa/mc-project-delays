@@ -15,3 +15,6 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Data downloaded by the final notebook when run from notebooks/ without data/raw
+notebooks/data/

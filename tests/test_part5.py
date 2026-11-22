@@ -1,4 +1,4 @@
-"""Checks for Part 5 (Robin). Run with `python tests/test_part5.py` until all pass.
+"""Checks for Part 5. Run with `python tests/test_part5.py` until all pass.
 
 They test mcpert/tails.py.
 """

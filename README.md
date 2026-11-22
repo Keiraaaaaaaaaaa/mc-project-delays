@@ -2,7 +2,7 @@
 
 **3ML project, Mathematics of Modern ML (F. Blibeche), Mines Paris - PSL × Albert School. Topic: Monte Carlo.**
 
-**Team:** Brian Ooi, Robin Levasseur, Keira Chang. Oral exam on Wed 25 Nov 2026 (15 min + 5 min of questions).
+**Team:** Brian Ooi, Robin Levasseur, Keira Chang.
 
 ## Research question
 
@@ -14,20 +14,30 @@ of each task into this formula. Because a maximum is convex, Jensen's inequality
 the plan is optimistic **even when every task estimate is right on average**. Computing the law of `T`
 exactly is #P-hard (Hagstrom, 1988), so we simulate it, and we study how far the simulation can be trusted.
 
-## Who does what
+## What we find
 
-Each of us edits **only their own files**, so there are no merge conflicts.
+- Monte Carlo gives the delivery date with an error of order `1/sqrt(n)`, whatever the size of the network,
+  and it matches exact formulas where they exist. Antithetic variables and a control variate divide its cost by about 4.
+- The probability of being on time and the 90% date come with error bars that need no assumption
+  (Hoeffding, order statistics). The CLT error bar on the *mean* breaks down with heavy-tailed delays,
+  which is what real overruns look like.
+- Rare catastrophic delays need importance sampling designed for heavy tails, and no amount of simulation
+  corrects a wrong model of how task delays depend on each other.
 
-| Part | Notebook | Code | Tests | Lead |
-|---|---|---|---|---|
-| 1. Motivation, 2. Maths, 3. Implementation | `notebooks/part1-3_foundations.ipynb` | `network.py`, `durations.py`, `montecarlo.py`, `clark.py`, `data.py`, `examples.py`, `style.py` | `tests/test_core.py` | Keira |
-| 4. Results | `notebooks/part4_results.ipynb` | `mcpert/psplib.py`, `mcpert/criticality.py` | `tests/test_part4.py` | Brian |
-| 5. Limitations, conclusion | `notebooks/part5_limitations.ipynb` | `mcpert/tails.py` | `tests/test_part5.py` | Robin |
+## The notebook
 
-At the end, `python scripts/build_final_notebook.py` merges the three notebooks into
-`notebooks/project.ipynb`, the notebook we submit (with the 5 required parts).
+`notebooks/project.ipynb` is the notebook we submit. It is **self-contained**: it includes all the code,
+downloads the data the first time it runs, and contains the 5 required parts (motivation, mathematical
+foundations, implementation, results, limitations and conclusion).
 
-Everyone presents their part at the oral, but **everyone must be able to explain every part**.
+It is built from three working notebooks (`part1-3_foundations`, `part4_results`, `part5_limitations`)
+and from the `mcpert` package:
+
+```bash
+python scripts/build_final_notebook.py
+```
+
+Then open `notebooks/project.ipynb` and run **Restart & Run All**.
 
 ## Repository layout
 
@@ -37,14 +47,14 @@ mcpert/                     the Python package (short, documented functions)
   durations.py              task-duration models (Normal, Triangular, Beta-PERT, resampled SiP ratios)
   montecarlo.py             simulation, confidence intervals, variance reduction, coverage
   clark.py                  Clark's formula and Sculli's approximation
-  data.py, examples.py      SiP loader, toy projects
+  data.py, examples.py      data download, SiP loader, toy projects
   style.py                  plotting style shared by all notebooks
-  psplib.py, criticality.py Part 4: real-size networks, criticality index
-  tails.py                  Part 5: Pareto model, Hill estimator, importance sampling
-notebooks/                  one notebook per part, merged at the end into project.ipynb
+  psplib.py, criticality.py real-size networks, criticality index
+  tails.py                  Pareto model, Hill estimator, importance sampling
+notebooks/                  working notebooks, merged into project.ipynb
 scripts/download_data.py    fetches the datasets into data/raw/ (not committed)
 scripts/build_final_notebook.py
-tests/                      one test file per part
+tests/                      checks of the package
 SOURCES.md                  annotated bibliography
 data/README.md              the datasets, their licences and how we use them
 ```
@@ -68,25 +78,15 @@ python scripts/download_data.py
 ```
 
 ```bash
-python tests/test_core.py
+python tests/test_core.py && python tests/test_part4.py && python tests/test_part5.py
 ```
 
 ```bash
-jupyter notebook notebooks/
+jupyter notebook notebooks/project.ipynb
 ```
 
 `download_data.py` fetches SiP and PSPLIB J30 (a few MB) with `curl`. On Windows, use `python`
 instead of `python3` and `.venv\Scripts\activate` instead of `source .venv/bin/activate`.
-
-## Timeline
-
-| Date | What |
-|---|---|
-| Thu 19 Nov | Supervised session: research question, notebook plan and the maths of Part 2 understood by all three of us |
-| Fri 20 Nov | Monte Carlo crash course |
-| Sun 22 Nov | Parts 4 and 5 pushed (suggested deadline) |
-| Mon 23 to Tue 24 Nov | Merge the notebooks, check everything runs, rehearse the oral |
-| Wed 25 Nov | Oral |
 
 ## Datasets and sources
 
