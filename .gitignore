@@ -1,6 +1,7 @@
-# Datasets are downloaded by scripts/download_data.py, not committed
-# (the SiP licence forbids redistributing modified copies, and DSLIB is large).
-data/raw/
+# Datasets are downloaded by the notebook into data/, not committed
+# (the SiP licence forbids redistributing modified copies).
+data/*
+!data/README.md
 
 # Python
 __pycache__/
@@ -15,6 +16,3 @@ venv/
 .DS_Store
 .vscode/
 .idea/
-
-# Data downloaded by the final notebook when run from notebooks/ without data/raw
-notebooks/data/

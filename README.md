@@ -26,43 +26,18 @@ exactly is #P-hard (Hagstrom, 1988), so we simulate it, and we study how far the
 
 ## The notebook
 
-`notebooks/project.ipynb` is the notebook we submit. It is **self-contained**: it includes all the code,
-downloads the data the first time it runs, and contains the 5 required parts (motivation, mathematical
-foundations, implementation, results, limitations and conclusion).
+Everything is in one notebook, [`why_projects_are_late.ipynb`](why_projects_are_late.ipynb). It is
+self-contained: it holds the explanations, the proofs and all the code, and it downloads its two datasets
+(a few MB) into `data/` the first time it runs. It follows the 5 required parts: motivation, mathematical
+foundations, implementation, results, limitations and conclusion. Each function is defined in the section
+that first uses it.
 
-It is built from three working notebooks (`part1-3_foundations`, `part4_results`, `part5_limitations`)
-and from the `mcpert` package:
-
-```bash
-python scripts/build_final_notebook.py
-```
-
-Then open `notebooks/project.ipynb` and run **Restart & Run All**.
-
-## Repository layout
-
-```
-mcpert/                     the Python package (short, documented functions)
-  network.py                project graph, longest path, critical path
-  durations.py              task-duration models (Normal, Triangular, Beta-PERT, resampled SiP ratios)
-  montecarlo.py             simulation, confidence intervals, variance reduction, coverage
-  clark.py                  Clark's formula and Sculli's approximation
-  data.py, examples.py      data download, SiP loader, toy projects
-  style.py                  plotting style shared by all notebooks
-  psplib.py, criticality.py real-size networks, criticality index
-  tails.py                  Pareto model, Hill estimator, importance sampling
-notebooks/                  working notebooks, merged into project.ipynb
-scripts/download_data.py    fetches the datasets into data/raw/ (not committed)
-scripts/build_final_notebook.py
-tests/                      checks of the package
-SOURCES.md                  annotated bibliography
-data/README.md              the datasets, their licences and how we use them
-```
+To run it, open it and choose **Restart & Run All** (about 20 seconds).
 
 ## Getting started
 
 ```bash
-git clone https://github.com/Keiraaaaaaaaaaa/mc-project-delays.git && cd mc-project-delays
+git clone https://github.com/Keiraaaaaaaaaa/mc-project-delays.git && cd mc-project-delays
 ```
 
 ```bash
@@ -74,20 +49,17 @@ pip install -r requirements.txt
 ```
 
 ```bash
-python scripts/download_data.py
+jupyter notebook why_projects_are_late.ipynb
 ```
 
-```bash
-python tests/test_core.py && python tests/test_part4.py && python tests/test_part5.py
+On Windows, use `python` instead of `python3` and `.venv\Scripts\activate` instead of
+`source .venv/bin/activate`.
+
+## Repository layout
+
 ```
-
-```bash
-jupyter notebook notebooks/project.ipynb
+why_projects_are_late.ipynb   the notebook (the only code of the project)
+SOURCES.md                    annotated bibliography
+data/README.md                the datasets, their licences and how we use them
+requirements.txt              Python packages
 ```
-
-`download_data.py` fetches SiP and PSPLIB J30 (a few MB) with `curl`. On Windows, use `python`
-instead of `python3` and `.venv\Scripts\activate` instead of `source .venv/bin/activate`.
-
-## Datasets and sources
-
-See [data/README.md](data/README.md) and [SOURCES.md](SOURCES.md).
